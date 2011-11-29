@@ -1,0 +1,7 @@
+ganglia puppet module
+
+Author: Daniel Leyden
+
+Supports the installation of ganglia using puppet
+
+
