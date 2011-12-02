@@ -37,7 +37,6 @@ class ganglia::client ($cluster='unspecified', $udp_port='8649') {
   }
 
   service {'ganglia-monitor':
-    ensure  => 'running',
     require => Package[$ganglia_client_pkg];
   }
 

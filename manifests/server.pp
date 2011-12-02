@@ -22,7 +22,6 @@ class ganglia::server {
   }
 
   service {$ganglia_server_pkg:
-    ensure  => 'running',
     require => Package[$ganglia_server_pkg];
   }
 
