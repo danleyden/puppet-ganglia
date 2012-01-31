@@ -29,7 +29,11 @@
 #   }
 #
 class ganglia::client ($cluster='unspecified', $udp_port='8649') {
-  $ganglia_client_pkg = 'ganglia-monitor'
+  case $operatingsystem {
+    'Ubuntu': {$ganglia_client_pkg = 'ganglia-monitor'}
+    'CentOS': {$ganglia_client_pkg = 'ganglia-gmond'}
+    default:  {fail('no known ganglia monitor package for this OS')}
+  }
 
   package {$ganglia_client_pkg:
     ensure => 'installed',
