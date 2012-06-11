@@ -19,10 +19,11 @@ class ganglia::webserver {
     alias  => 'ganglia_webserver',
   }
 
-  file {'/etc/apache2/sites-enabled/apache.conf':
-    ensure  => link,
-    target  => '/etc/ganglia-webfrontend/apache.conf',
-    require => Package['ganglia_webserver'];
+  file {'/etc/apache2/sites-enabled/ganglia':
+    ensure  => present,
+    require => Package['ganglia_webserver'],
+    notify  => Service['apache2'],
+    content => template('ganglia/ganglia');
   }
 
 }
