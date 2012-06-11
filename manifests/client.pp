@@ -25,7 +25,8 @@
 #
 #   class {'ganglia::client':
 #     cluster  => 'mycluster',
-#     udp_port => '1234';
+#     udp_port => '1234',
+#     owner => 'myconpany'
 #   }
 #
 class ganglia::client ($cluster='unspecified', $udp_port='8649') {
