@@ -30,7 +30,7 @@
 #     latlong => 'latlong',
 #   }
 #
-class ganglia::client ($cluster='unspecified', $udp_port='8649') {
+class ganglia::client ($cluster='unspecified', $udp_port='8649', $owner='unspecified') {
   case $operatingsystem {
     'Ubuntu': {$ganglia_client_pkg = 'ganglia-monitor'}
     'CentOS': {$ganglia_client_pkg = 'ganglia-gmond'}
