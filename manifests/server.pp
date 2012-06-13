@@ -3,6 +3,9 @@
 # This class installs the ganglia server
 #
 # Parameters:
+#   $cluster
+#     default my_cluster
+#     the name of the cluster to publish with metrics
 #
 # Actions:
 #   installs the ganglia server
