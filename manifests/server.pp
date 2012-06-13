@@ -10,7 +10,7 @@
 # Sample Usage:
 #   include ganglia::server
 #
-class ganglia::server {
+class ganglia::server ($cluster='my_cluster'){
 
   include ganglia::client
 
