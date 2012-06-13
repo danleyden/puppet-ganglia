@@ -10,5 +10,7 @@
 #   include ganglia
 #
 class ganglia {
-
+  package {'rrdtool':
+    ensure => 'installed',
+  }
 }

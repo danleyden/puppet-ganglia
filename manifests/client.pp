@@ -25,10 +25,16 @@
 #
 #   class {'ganglia::client':
 #     cluster  => 'mycluster',
-#     udp_port => '1234';
+#     udp_port => '1234',
+#     owner => 'myconpany',
 #   }
 #
-class ganglia::client ($cluster='unspecified', $udp_port='8649') {
+class ganglia::client ($cluster='unspecified', $udp_port='8649', $owner='unspecified',
+  $multicast_address = "239.2.11.71",
+  $unicast_listen_port = "8649",
+  $unicast_targets = [],
+  $send_metadata_interval = 0, ) {
+
   case $operatingsystem {
     'Ubuntu': {$ganglia_client_pkg = 'ganglia-monitor'}
     'CentOS': {$ganglia_client_pkg = 'ganglia-gmond'}
