@@ -64,8 +64,14 @@ class ganglia::client (
   ) {
 
   case $operatingsystem {
-    'Ubuntu': {$ganglia_client_pkg = 'ganglia-monitor'}
-    'CentOS': {$ganglia_client_pkg = 'ganglia-gmond'}
+    'Ubuntu': {
+      $ganglia_client_pkg = 'ganglia-monitor'
+      $ganglia_client_service = 'ganglia-monitor'
+    }
+    'CentOS': {
+      $ganglia_client_pkg = 'ganglia-gmond'
+      $ganglia_client_service = 'gmond'
+    }
     default:  {fail('no known ganglia monitor package for this OS')}
   }
 
@@ -74,7 +80,10 @@ class ganglia::client (
     alias  => 'ganglia_client',
   }
 
-  service {'ganglia-monitor':
+  service {$ganglia_client_service:
+    ensure  => 'running',
+    alias   => 'ganglia_client',
+    status  => 'ps -ef | grep gmond | grep ganglia | grep -qv grep',
     require => Package[$ganglia_client_pkg];
   }
 
@@ -82,7 +91,7 @@ class ganglia::client (
     ensure  => present,
     require => Package['ganglia_client'],
     content => template('ganglia/gmond.conf'),
-    notify  => Service['ganglia-monitor'];
+    notify  => Service[$ganglia_client_service];
   }
 
 }
