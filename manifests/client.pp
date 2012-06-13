@@ -30,6 +30,11 @@
 #   }
 #
 class ganglia::client ($cluster='unspecified', $udp_port='8649', $owner='unspecified') {
+  $multicast_address = hiera("multicast_address", "239.2.11.71")
+  $unicast_listen_port = hiera("unicast_listen_port", "8649")
+  $unicast_targets = hiera_array("unicast_targets", [])
+  $send_metadata_interval = hiera("send_metadata_interval", 0)
+
   case $operatingsystem {
     'Ubuntu': {$ganglia_client_pkg = 'ganglia-monitor'}
     'CentOS': {$ganglia_client_pkg = 'ganglia-gmond'}
