@@ -24,10 +24,4 @@ class ganglia::webserver {
     require => Package['ganglia_webserver'],
     content => template('ganglia/ganglia');
   }
-
-#  file {'/etc/apache2/sites-enabled/ganglia':
-#    ensure  => link,
-#    target  => '/etc/ganglia-webfrontend/apache.conf',
-#    require => Package['ganglia-webfrontend']
-#  }
 }
