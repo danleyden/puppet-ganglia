@@ -33,7 +33,9 @@ class ganglia::client ($cluster='unspecified', $udp_port='8649', $owner='unspeci
   $multicast_address = "239.2.11.71",
   $unicast_listen_port = "8649",
   $unicast_targets = [],
-  $send_metadata_interval = 0, ) {
+  $send_metadata_interval = 0,
+  $mode = "unicast",
+  ) {
 
   case $operatingsystem {
     'Ubuntu': {$ganglia_client_pkg = 'ganglia-monitor'}
