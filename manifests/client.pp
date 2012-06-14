@@ -35,6 +35,10 @@
 #     ipaddress and an entry named port
 #     e.g. [ {'ipaddress' => '1.2.3.4', 'port' => '1234'} ]
 #
+#   $mode
+#     default multicast
+#     multicast or unicast
+#
 # Actions:
 #   installs the ganglia client
 #
@@ -60,7 +64,8 @@ class ganglia::client (
   $send_metadata_interval = 0,
   $udp_port='8649',
   $unicast_listen_port = '8649',
-  $unicast_targets = []
+  $unicast_targets = [],
+  $mode = "multicast",
   ) {
 
   case $operatingsystem {
