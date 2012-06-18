@@ -4,7 +4,7 @@
 #
 # Parameters:
 #   $cluster
-#     default my_cluster
+#     default  [{cluster_name => 'my_cluster',[{host => 'localhost', port => 8649}]}]
 #     the name of the cluster to publish with metrics
 #
 # Actions:
@@ -13,7 +13,10 @@
 # Sample Usage:
 #   include ganglia::server
 #
-class ganglia::server ($cluster='my_cluster'){
+class ganglia::server (
+  $clusters = [{cluster_name => 'my_cluster', cluster_hosts => [{address => 'localhost', port => '8649'}]}],
+  $gridname = '',
+  ) {
 
   include ganglia::client
 

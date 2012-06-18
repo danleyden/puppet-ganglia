@@ -62,10 +62,10 @@ class ganglia::client (
   $multicast_address = '239.2.11.71',
   $owner='unspecified',
   $send_metadata_interval = 0,
-  $udp_port='8649',
+  $udp_port = '8649',
   $unicast_listen_port = '8649',
   $unicast_targets = [],
-  $mode = "multicast",
+  $network_mode ='multicast',
   ) {
 
   case $operatingsystem {
