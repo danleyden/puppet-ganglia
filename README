@@ -4,6 +4,5 @@ Author: Daniel Leyden
 
 Contributor: Jean-Daniel BUSSY
 
-Supports the installation of ganglia using puppet
-
-
+Supports the installation of ganglia using puppet with multiclusters like described here:
+  http://sourceforge.net/apps/trac/ganglia/wiki/ganglia_quick_start
