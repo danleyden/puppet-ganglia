@@ -3,7 +3,7 @@
 # This class installs the ganglia server
 #
 # Parameters:
-#   $cluster
+#   $clusters
 #     default  [{cluster_name => 'my_cluster',[{host => 'localhost', port => 8649}]}]
 #     the name of the cluster to publish with metrics
 #

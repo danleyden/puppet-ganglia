@@ -35,7 +35,7 @@
 #     ipaddress and an entry named port
 #     e.g. [ {'ipaddress' => '1.2.3.4', 'port' => '1234'} ]
 #
-#   $mode
+#   $network_mode
 #     default multicast
 #     multicast or unicast
 #
