@@ -68,12 +68,12 @@ class ganglia::client (
   $network_mode ='multicast',
   ) {
 
-  case $operatingsystem {
-    'Ubuntu': {
+  case $::osfamily {
+    'Debian': {
       $ganglia_client_pkg = 'ganglia-monitor'
       $ganglia_client_service = 'ganglia-monitor'
     }
-    'CentOS': {
+    'RedHat': {
       $ganglia_client_pkg = 'ganglia-gmond'
       $ganglia_client_service = 'gmond'
     }
