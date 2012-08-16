@@ -12,7 +12,10 @@
 #
 class ganglia::webserver {
 
-  $ganglia_webserver_pkg = 'ganglia-webfrontend'
+  $ganglia_webserver_pkg = $::osfamily ? {
+    Debian => 'ganglia-webfrontend',
+    RedHat => 'ganglia-wed',
+  }
 
   package {$ganglia_webserver_pkg:
     ensure => present,
@@ -20,6 +23,11 @@ class ganglia::webserver {
   }
 
   file {'/etc/apache2/sites-enabled/ganglia':
+    ensure  => '/etc/apache2/sites-available/ganglia',
+    require => File['/etc/apache2/sites-available/ganglia'],
+  }
+
+  file {'/etc/apache2/sites-available/ganglia':
     ensure  => present,
     require => Package['ganglia_webserver'],
     content => template('ganglia/ganglia');

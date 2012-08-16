@@ -74,6 +74,7 @@ class ganglia::client (
       $ganglia_client_service = 'ganglia-monitor'
     }
     'RedHat': {
+      # requires epel repo
       $ganglia_client_pkg = 'ganglia-gmond'
       $ganglia_client_service = 'gmond'
     }
