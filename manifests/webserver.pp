@@ -10,7 +10,9 @@
 # Sample Usage:
 #   include ganglia::server
 #
-class ganglia::webserver {
+class ganglia::webserver (
+  $use_alias = true,
+) {
 
   $ganglia_webserver_pkg = $::osfamily ? {
     Debian => 'ganglia-webfrontend',
