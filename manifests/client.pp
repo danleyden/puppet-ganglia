@@ -70,13 +70,18 @@ class ganglia::client (
 
   case $::osfamily {
     'Debian': {
-      $ganglia_client_pkg = 'ganglia-monitor'
+      $ganglia_client_pkg     = 'ganglia-monitor'
       $ganglia_client_service = 'ganglia-monitor'
+      $ganglia_lib_dir        = '/usr/lib/ganglia'
     }
     'RedHat': {
       # requires epel repo
-      $ganglia_client_pkg = 'ganglia-gmond'
+      $ganglia_client_pkg     = 'ganglia-gmond'
       $ganglia_client_service = 'gmond'
+      $ganglia_lib_dir        = $::architecture ? {
+        /(amd64|x86_64)/ => '/usr/lib64/ganglia',
+        default          => '/usr/lib/ganglia',
+      }
     }
     default:  {fail('no known ganglia monitor package for this OS')}
   }
