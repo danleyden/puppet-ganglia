@@ -3,9 +3,14 @@
 # This class installs the ganglia server
 #
 # Parameters:
+#
+#   $gridname
+#     default  'unspecified'
+#     the name for the grid of clusters
+#
 #   $clusters
-#     default  [{cluster_name => 'my_cluster',[{host => 'localhost', port => 8649}]}]
-#     the name of the cluster to publish with metrics
+#     default  [ 'my_cluster', ]
+#     array of the names of the clusters to publish metrics of
 #
 # Actions:
 #   installs the ganglia server
@@ -14,10 +19,11 @@
 #   include ganglia::server
 #
 class ganglia::server (
-  $clusters = [{cluster_name => 'my_cluster', cluster_hosts => [{address => 'localhost', port => '8649'}]}],
-  $gridname = '',
-  ) {
+  $gridname = 'unspecified',
+  $clusters = [ 'my_cluster', ],
+) {
 
+  include concat::setup
   include ganglia::client
 
   $ganglia_server_pkg = 'gmetad'
@@ -31,11 +37,23 @@ class ganglia::server (
     require => Package[$ganglia_server_pkg];
   }
 
-  file {'/etc/ganglia/gmetad.conf':
-    ensure  => present,
-    require => Package['ganglia_server'],
-    notify  => Service[$ganglia_server_pkg],
-    content => template('ganglia/gmetad.conf');
+  concat { '/etc/ganglia/gmetad.conf':
+    notify => Service[$ganglia_server_pkg],
+  }
+
+  concat::fragment { "gmetad.conf_header":
+    order   => 01,
+    content => template('ganglia/gmetad.conf.head'),
+    target => '/etc/ganglia/gmetad.conf',
+  }
+
+  ganglia::data_source { $clusters: }
+
+  concat::fragment { "gmetad.conf_footer":
+    order   => 99,
+    content => template('ganglia/gmetad.conf.foot'),
+    target => '/etc/ganglia/gmetad.conf',
   }
 
 }
+

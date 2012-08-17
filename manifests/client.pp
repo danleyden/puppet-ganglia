@@ -58,7 +58,7 @@
 #   }
 #
 class ganglia::client (
-  $cluster='unspecified',
+  $cluster='my_cluster',
   $multicast_address = '239.2.11.71',
   $owner='unspecified',
   $send_metadata_interval = 0,
@@ -66,18 +66,26 @@ class ganglia::client (
   $unicast_listen_port = '8649',
   $unicast_targets = [],
   $network_mode ='multicast',
-  ) {
+) {
 
-  case $operatingsystem {
-    'Ubuntu': {
-      $ganglia_client_pkg = 'ganglia-monitor'
+  case $::osfamily {
+    'Debian': {
+      $ganglia_client_pkg     = 'ganglia-monitor'
       $ganglia_client_service = 'ganglia-monitor'
+      $ganglia_lib_dir        = '/usr/lib/ganglia'
     }
-    'CentOS': {
-      $ganglia_client_pkg = 'ganglia-gmond'
+    'RedHat': {
+      # requires epel repo
+      $ganglia_client_pkg     = 'ganglia-gmond'
       $ganglia_client_service = 'gmond'
+      $ganglia_lib_dir        = $::architecture ? {
+        /(amd64|x86_64)/ => '/usr/lib64/ganglia',
+        default          => '/usr/lib/ganglia',
+      }
     }
-    default:  {fail('no known ganglia monitor package for this OS')}
+    default:  {
+      fail("no known ganglia monitor package for OS family $::osfamily")
+    }
   }
 
   package {$ganglia_client_pkg:
@@ -97,6 +105,12 @@ class ganglia::client (
     require => Package['ganglia_client'],
     content => template('ganglia/gmond.conf'),
     notify  => Service[$ganglia_client_service];
+  }
+
+  @@concat::fragment { "ganglia_data_source_$::hostname":
+    content => "$::ipaddress:$udp_port ",
+    tag     => "ganglia_data_source_$cluster",
+    target  => '/etc/ganglia/gmetad.conf',
   }
 
 }

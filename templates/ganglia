@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-ServerName <%= hostname %>
-ServerAlias /ganglia
+ServerName <%= fqdn %>
+<% if use_alias -%>ServerAlias /ganglia<% end -%>
 DocumentRoot /usr/share/ganglia-webfrontend
 </VirtualHost>

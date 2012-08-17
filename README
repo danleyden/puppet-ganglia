@@ -3,6 +3,7 @@ ganglia puppet module
 Author: Daniel Leyden
 
 Contributor: Jean-Daniel BUSSY
+Contributor: K Jonathan "Jesusaurus" Harker
 
 Supports the installation of ganglia using puppet with multiclusters like described here:
 
