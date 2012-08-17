@@ -15,7 +15,7 @@
 #
 class ganglia::server (
   $gridname = 'unspecified',
-  $cluster  = 'my_cluster',
+  $clusters = [ 'my_cluster', ],
 ) {
 
   include concat::setup
@@ -32,37 +32,23 @@ class ganglia::server (
     require => Package[$ganglia_server_pkg];
   }
 
-	concat { '/etc/ganglia/gmetad.conf':
-		notify => Service[$ganglia_server_pkg],
-	}
+  concat { '/etc/ganglia/gmetad.conf':
+    notify => Service[$ganglia_server_pkg],
+  }
 
-	concat::fragment { "gmetad.conf_header":
-		order   => 01,
-		content => template('ganglia/gmetad.conf.head'),
-		target => '/etc/ganglia/gmetad.conf',
-	}
+  concat::fragment { "gmetad.conf_header":
+    order   => 01,
+    content => template('ganglia/gmetad.conf.head'),
+    target => '/etc/ganglia/gmetad.conf',
+  }
 
-	concat::fragment { "gmetad.conf_footer":
-		order   => 99,
-		content => template('ganglia/gmetad.conf.foot'),
-		target => '/etc/ganglia/gmetad.conf',
-	}
+  ganglia::data_source { $clusters: }
 
-	concat::fragment { "data_sources_start":
-		order  => 10,
-                content => "\ndata_source \"$cluster\" ",
-		target => '/etc/ganglia/gmetad.conf',
-	}
-
-	Concat::Fragment <<| tag == "ganglia_data_source_$cluster" |>> {
-		order  => 11,
-		target => '/etc/ganglia/gmetad.conf',
-	}
-
-	concat::fragment { "data_sources_end":
-		order   => 12,
-		content => "\n\n",
-		target  => '/etc/ganglia/gmetad.conf',
-	}
+  concat::fragment { "gmetad.conf_footer":
+    order   => 99,
+    content => template('ganglia/gmetad.conf.foot'),
+    target => '/etc/ganglia/gmetad.conf',
+  }
 
 }
+
