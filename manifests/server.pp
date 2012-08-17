@@ -3,9 +3,14 @@
 # This class installs the ganglia server
 #
 # Parameters:
+#
+#   $gridname
+#     default  'unspecified'
+#     the name for the grid of clusters
+#
 #   $clusters
-#     default  [{cluster_name => 'my_cluster',[{host => 'localhost', port => 8649}]}]
-#     the name of the cluster to publish with metrics
+#     default  [ 'my_cluster', ]
+#     array of the names of the clusters to publish metrics of
 #
 # Actions:
 #   installs the ganglia server
