@@ -7,3 +7,6 @@ Contributor: Jean-Daniel BUSSY
 Supports the installation of ganglia using puppet with multiclusters like described here:
 
 http://sourceforge.net/apps/trac/ganglia/wiki/ganglia_quick_start
+
+This module is published under the Apache 2.0 license - http://www.apache.org/licenses/LICENSE-2.0
+
