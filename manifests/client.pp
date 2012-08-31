@@ -73,6 +73,9 @@ class ganglia::client (
       $ganglia_client_pkg     = 'ganglia-monitor'
       $ganglia_client_service = 'ganglia-monitor'
       $ganglia_lib_dir        = '/usr/lib/ganglia'
+      Service[$ganglia_client_service] {
+        status  => 'ps -ef | grep gmond | grep ganglia | grep -qv grep',
+      }
     }
     'RedHat': {
       # requires epel repo
@@ -96,7 +99,6 @@ class ganglia::client (
   service {$ganglia_client_service:
     ensure  => 'running',
     alias   => 'ganglia_client',
-    status  => 'ps -ef | grep gmond | grep ganglia | grep -qv grep',
     require => Package[$ganglia_client_pkg];
   }
 
