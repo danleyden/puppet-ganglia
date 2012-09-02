@@ -14,16 +14,18 @@ class ganglia::webserver {
 
   $ganglia_webserver_pkg = $::osfamily ? {
     Debian => 'ganglia-webfrontend',
-    RedHat => 'ganglia-wed',
+    RedHat => 'ganglia-web',
+    default => fail("Module ${module_name} is not supported on
+${::operatingsystem}")
   }
 
   package {$ganglia_webserver_pkg:
     ensure => present,
     alias  => 'ganglia_webserver',
   }
-
   file {'/etc/apache2/sites-enabled/ganglia':
-    ensure  => '/etc/apache2/sites-available/ganglia',
+    ensure  => link,
+    target  => '/etc/apache2/sites-available/ganglia',
     require => File['/etc/apache2/sites-available/ganglia'],
   }
 
