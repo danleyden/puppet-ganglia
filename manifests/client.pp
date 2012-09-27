@@ -58,6 +58,7 @@
 #   }
 #
 class ganglia::client (
+  $ensure = 'installed',
   $cluster='unspecified',
   $multicast_address = '239.2.11.71',
   $owner='unspecified',
@@ -87,7 +88,7 @@ class ganglia::client (
   }
 
   package {$ganglia_client_pkg:
-    ensure => 'installed',
+    ensure => $ensure,
     alias  => 'ganglia_client',
   }
 
@@ -104,5 +105,4 @@ class ganglia::client (
     content => template('ganglia/gmond.conf'),
     notify  => Service[$ganglia_client_service];
   }
-
 }

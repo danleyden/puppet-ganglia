@@ -4,6 +4,7 @@ Author: Daniel Leyden
 
 Contributor: Jean-Daniel BUSSY
 Contributor: K Jonathan "Jesusaurus" Harker
+Contributor: Andy Shinn
 
 Supports the installation of ganglia using puppet with multiclusters like described here:
 
