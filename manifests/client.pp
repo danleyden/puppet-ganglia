@@ -67,6 +67,7 @@ class ganglia::client (
   $unicast_listen_port = '8649',
   $unicast_targets = [],
   $network_mode ='multicast',
+  $user = 'ganglia',
   ) {
 
   case $::osfamily {
