@@ -39,6 +39,10 @@
 #     default multicast
 #     multicast or unicast
 #
+#   $user
+#     default ganglia
+#     The user account to be used by the ganglia service
+#
 # Actions:
 #   installs the ganglia client
 #
@@ -75,6 +79,10 @@ class ganglia::client (
       $ganglia_client_pkg     = 'ganglia-monitor'
       $ganglia_client_service = 'ganglia-monitor'
       $ganglia_lib_dir        = '/usr/lib/ganglia'
+      Service[$ganglia_client_service] {
+        hasstatus => false,
+        status    => "ps -ef | grep gmond | grep ${user} | grep -qv grep"
+      }
     }
     'RedHat': {
       # requires epel repo
@@ -96,7 +104,6 @@ class ganglia::client (
   service {$ganglia_client_service:
     ensure  => 'running',
     alias   => 'ganglia_client',
-    status  => 'ps -ef | grep gmond | grep ganglia | grep -qv grep',
     require => Package[$ganglia_client_pkg];
   }
 
