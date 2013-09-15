@@ -103,6 +103,7 @@ class ganglia::client (
 
   service {$ganglia_client_service:
     ensure  => 'running',
+    enable  => 'true',
     alias   => 'ganglia_client',
     require => Package[$ganglia_client_pkg];
   }
